@@ -1,0 +1,19 @@
+{
+  "name": "myfirstapp",
+  "version": "0.0.0-beta",
+  "description": "Ma super description",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js port=3200"
+  },
+  "author": "Niset Alexis ou adresse contributeurs",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.2.0",
+    "ejs": "^3.1.8"
+  },
+  "devDependencies": {
+    "express": "^4.18.1"
+  }
+}

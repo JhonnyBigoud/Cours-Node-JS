@@ -1,0 +1,242 @@
+Quel version de JavaScript :
+
+-ES pour ECMAScript Edition :
+Les fonctionnalités sont différente selon la version utilisée
+ES6 = 2015, ensuite on a ES2016, ES2017 et ES2018....
+
+
+1 - LE POINT VIRGULE :
+non obligatoire depuis ES6 (l'insertion est dite automatique), mais fortement conseillé, car si on laisse
+le soinn exclusif à Js, il pourrait se tromper et mal interpreter node code.
+
+exemple  :
+
+const a = 1
+const b = 2
+const c = 3
+(a + b)toString()
+
+Pous Js c'est comme si vous aviez écrit const c = 3(a+b).toString()
+
+
+2 - LES VARIABLES ET CONSTANTES :
+Faire attention aux portées des variables :
+
+Depuis ES appuration de LET
+
+La variable LET n'est pas affectée après une utilisation en locale contrairement à VAR.
+
+les constantes : const valeur immuable, cependant il est possible de modifier ce qu'elle contient 
+
+const tab = ["JS", "PHP", "Python"];
+    tab = ["JS","PHP", "Python"]; //Erreur car "=" signifie nouvelle assignation
+    tab.push("C++"); //"ok" car on ajoute un élément à l'interieur du tableau mais en soit l'objet "tab" reste toujours un tableau.
+    JS donne cette possibilité, c'est pour ça qu'il est possible de modifier des constantes dans REACT par exemple.
+
+
+3 - LES BOUCLES
+
+La constante FOR OF qui existe depuis ES6 :
+
+const languages = ["JS", "PHP", "Python", "Ruby", "C"];
+
+for(const language of languages){ // On aurait pu faire le traitement avec LET
+
+    console.log(language);
+
+}
+
+ - LES FONCTIONS 
+
+ les fonctions anonyme :
+
+ const sum = function(a,b){
+
+        return a + b
+ };
+
+//LA fonction anonyme (pas de nom) peut-être passé dans une variable ou une constante.
+On privilégie la const car pas définition elle n'a pas vocation à changer tt comme une fonction
+
+const res = sum(2,5);
+
+Les foncfions fléchées : depuis ES6
+
+const sum = (a,b) => {
+
+    return a + b
+}
+// même resultat que la fonction anonyme, c'est simplement une syntaxe amélliorée de celle-contient
+
+const sum = a => { //un seul param
+
+    return a + 10;
+}
+
+const sum = (a + b) => a + b; //les crochets et le return ne sont pas obligatoire si une seule instruction (simple)
+
+
+5 - LES OBJETS
+
+objet classique :
+
+const pc = {
+
+    ram : 16, //propriété
+    stockage : 512,
+    processuer : "Intel Core i7",
+    type : "Portable',
+    annee : 2019,
+    logiciels : ["VScode", "FireFox", "Node.Js", "Terminal"],
+
+        upgrade : function(){ //méthode (fonction anonyme)
+
+                this.ram *= 2; //On fait une mise à jour sur notre pc qui va doubler nos rams
+                this.stockage *= 2; //Le "this" répresente l'objet "PC" tout entier à partir duquel on va éditer la fonction
+        }
+}
+
+console.log(pc);
+console.log(pc.stockage);
+console.log(pc.logiciels);
+
+pc.upgrade();
+console.log(pc);
+
+le JSON :
+
+console.log(JSON.stringify(pc)); //Notre objet est traduit en châine de caractère.
+//ATTENTION : il ne s'agit pas d'un nouvel objet mais bel et bien d'une châine de caractère
+// A SAVOIR : les fonctions ne peuvent être transposrtée en JSON
+
+const pcJson = JSON.stringify(pc); //meilleure syntaxe, lorsuq'on met notre JSON.stringify dans une constante
+console.log(pcJson);
+console.log(typeof pcJson); //string
+
+
+6 - LES CLASSES
+
+class Voiture { //En JS est une classe n'est rien d'autre qu'un TEMPLATE de notre Objet 
+
+    constructor(marque, annee, kilometrage){//méthode preopre à la classe
+
+                this.marque = marque ; //"La marque de l'objet crée prend la marque passée en paramètre
+                this.annee = annee;
+                this.kilometrage = kilometrage;
+    }
+
+    afficherInfo() {
+
+        console.log("====== Informations =======");
+        console.log(`>Marque : ${this.marque}`);
+        console.log(`>Annee : ${this.annee}`);
+        console.log(`>Km : ${this.kilometrage}`);
+    }
+
+}
+
+
+const v = new Voiture("Peugeot", 2013 , 250000);
+
+console.log(v);
+
+
+v1.marque = "Hyundai";
+v1.annee = 2010
+v1.kilometrage = 11000
+v1.afficherInfo(); .. On peut ainsi modifier le contenu des propriété d'un objet
+//san avoir à créer un nouvel objet.
+
+
+7  LES FONCTION ASYNCHRONES
+
+le principe des évènemets :
+
+function hello(){
+
+    console.log("Hello");
+}
+
+setTimeout(hello, 2000); //Cette fonction sera éxécutée après 2 secondes
+
+/:Amelliorer le code
+
+setTimeout(() = > {
+    console.log("Hello);
+}, 2000)
+
+// La subtilité de JS
+
+console.log(" 1 - lancement Timer");
+
+setTimeout(() = > {
+    console.log("2 - Hello);
+}, 2000)
+
+console.log(" 3 - lancement Terminé");
+
+//Normalement l'ordre d'éxécution dévrait être 1 -2 -3
+//Mais Node.Js ne va pas perdre le temps et attendre un programme bloqué ou en attente d'instruction, il passe à la suivante
+//ASYNCHRONE = pas synchrone
+
+les promesses : 
+
+
+
+const attendre2secondes =  new Promise((resolve, reject) =>{
+
+                setTimeout(()=>{
+
+                    console.log("2 - Timer exécuté");
+
+                    resolve("resolu")
+
+                }, 2000);
+
+            });
+}
+
+console.log("1 - lancement timer");
+
+attendre2secondes.then(() => {// Attend d'abord la promesse puis ENSUITE(then) éxécute moi l'intruction (fonction anonyme)
+
+   console.log("3 - Timer Terminé");
+})
+
+//recuperer des donnée
+
+console.log("1 - lancement timer");
+
+attendre2secondes.then((data)=>{
+
+    console.log(data); //La variable data ici va nous retourner le contenu de notre resolve ici la chaine de car "resolu".
+
+    console.log(" 3 - Timer Terminé");
+
+})
+
+// Amelliorons encore un peu :
+
+Function attendre2secondes2() {
+
+
+    new Promise((resolve, reject) =>{
+
+                setTimeout(()=>{
+
+                    console.log("2 - Timer exécuté");
+
+                    resolve("resolu")
+
+                }, 2000);
+
+            });
+}
+
+async function main(){
+
+    console.log ("1 - lancement timer");
+
+        await attendre2secondes2() ; // Le await ne s'utilise qu'en cas de promise dans la fonction.
+        //
+}
